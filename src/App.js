@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import data from './data/index.js';
+import NavBar from "./components/navbar.js"
+import List from './components/list.js'
+import { useState } from 'react';
 
 function App() {
+
+  const [people,setPeople] = useState(data);
+  const [isClear,setIsClear] = useState(false);
+
+  const clearHandler = () => {
+    setPeople([]);
+    setIsClear(true);
+  }
+  
+  const resetHandler = () => {
+    setPeople(data);
+     setIsClear(false);
+  }
+
+
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <NavBar/>
+     <main>
+    <section className='App container'>
+      <h3>{people.length ? "Birthdays Today" : "No Birthday Today"} </h3>
+      <List people={people}/>
+      <button type='button' onClick={clearHandler} className='container_btn'> Clear All</button>
+      <button type='button' onClick={resetHandler} className='container_btn'> Reset</button>
+        { isClear === true ? <h4 className='note'><strong>Note:</strong>Click the Reset to data the Data again</h4> : ''} 
+    </section>
+    </main>
+    </>
   );
 }
 
+// DesignDaily
 export default App;
